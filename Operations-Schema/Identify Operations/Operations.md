@@ -2,52 +2,40 @@
 
 ## Smart Museum Artifact Conservation System
 
-The following operations are performed by the system. Operation names describe actions or decisions and do not reuse system state names.
+| OP_ID | Operations | Purpose |
+|---|---|---|
+| O1 | Perform Power-On Self-Check | Test all essential sensors and environmental-control devices before normal operation. |
+| O2 | Validate Essential Device Readiness | Confirm that every essential device is working correctly and can support safe conservation. |
+| O3 | Initialize Environmental Monitoring | Start continuous collection, timestamping, and health monitoring of chamber conditions. |
+| O4 | Register Artifact Identity | Record the artifact identification information and link it to the active chamber session. |
+| O5 | Load Required Environmental Profile | Load and validate the artifact-specific temperature, humidity, light, vibration, and safety limits. |
+| O6 | Authorize Conservation Start | Confirm that the artifact profile is loaded, sensors are ready, and the chamber door is closed. |
+| O7 | Sample Chamber Conditions | Collect current temperature, humidity, light, vibration, door, artifact-condition, and power readings. |
+| O8 | Evaluate Environmental Compliance | Compare current readings with the limits required for the artifact. |
+| O9 | Issue Temperature Correction | Send a bounded control command to return temperature to the permitted range. |
+| O10 | Issue Humidity Correction | Send a bounded control command to return humidity to the permitted range. |
+| O11 | Verify Environmental Recovery | Use fresh sensor readings to confirm that a corrected condition has actually returned within limits. |
+| O12 | Escalate Artifact Protection | Move from normal conservation priorities to protective action when recovery fails or risk is critical. |
+| O13 | Apply Additional Protection Controls | Reduce light exposure and activate available auxiliary controls to reduce risk to the artifact. |
+| O14 | Generate Conservation Alert | Notify the museum operator about protection events, serious faults, and required action. |
+| O15 | Detect Vibration Hazard | Identify significant vibration and suspend activities that could increase risk to the artifact. |
+| O16 | Verify Vibration Stabilization | Confirm that vibration remains below the permitted threshold for the required time. |
+| O17 | Handle Door-Open Interruption | Immediately suspend normal conservation when the chamber door opens. |
+| O18 | Verify Resumption Readiness | Recheck environmental conditions, artifact condition, and sensor status before resuming after a door interruption. |
+| O19 | Manage Power Loss | Transfer to verified emergency power when available or initiate a safe response when it is unavailable. |
+| O20 | Record Power Incident | Store a time-stamped record of power loss, emergency-power status, and the system response. |
+| O21 | Confirm Safe Artifact Removal | Authorize removal only when the chamber is safe and no protection response is active. |
 
-| Operation ID | Operation name | Trigger or input | Main purpose | Result or output |
-|---|---|---|---|---|
-| O1 | Perform Power-On Self-Check | Chamber powered on | Test sensors and environmental-control devices before normal operation. | Self-check result and device diagnostic records. |
-| O2 | Validate Essential Device Readiness | Self-check results | Confirm that all essential sensors and control devices are working correctly. | Readiness decision; failed devices are identified. |
-| O3 | Initialize Environmental Monitoring | Successful readiness validation | Start continuous observation of chamber and artifact-related measurements. | Monitoring services enabled. |
-| O4 | Register Artifact Identity | Artifact placed inside chamber | Record the artifact identification information. | Artifact record created and linked to the chamber session. |
-| O5 | Load Required Environmental Profile | Artifact record and conservation limits | Load the artifact-specific temperature, humidity, light, vibration, and safety limits. | Active environmental profile available for comparison. |
-| O6 | Authorize Conservation Start | Door closed and profile loaded | Confirm that the conditions required for normal conservation are satisfied. | Conservation activity may begin, or a blocking reason is recorded. |
-| O7 | Sample Chamber Conditions | Periodic monitoring cycle | Read temperature, humidity, light exposure, vibration, door status, artifact condition, and power availability. | Timestamped sensor sample. |
-| O8 | Evaluate Environmental Compliance | Current sample and artifact profile | Compare measured conditions with the permitted ranges. | Compliance result for each monitored environmental factor. |
-| O9 | Issue Temperature Correction | Temperature outside permitted range | Command the environmental-control mechanism to restore temperature. | Temperature-recovery command and recovery timer. |
-| O10 | Issue Humidity Correction | Humidity outside permitted range | Command the environmental-control mechanism to restore humidity. | Humidity-recovery command and recovery timer. |
-| O11 | Verify Environmental Recovery | Recovery command and new sensor readings | Confirm through measurements that the corrected condition is actually within limits. | Verified recovery or failed-recovery result. |
-| O12 | Escalate Artifact Protection | Recovery period expires without compliance | Prioritize artifact protection over normal conservation operation. | Protection actions enabled and normal operation suspended. |
-| O13 | Apply Additional Protection Controls | Protection response active | Reduce light exposure and activate additional environmental controls where available. | Reduced-risk chamber configuration. |
-| O14 | Generate Conservation Alert | Protection response or serious abnormality | Notify the museum operator of the condition and required attention. | Alert containing severity, cause, time, and chamber details. |
-| O15 | Detect Vibration Hazard | Vibration sensor exceeds permitted threshold | Identify significant vibration while an artifact is inside. | Vibration event recorded and risk-increasing activities suspended. |
-| O16 | Verify Vibration Stabilization | Vibration has fallen below threshold | Confirm that vibration remains below the limit for the required stabilization period. | Stabilization verified or rejected. |
-| O17 | Handle Door-Open Interruption | Door opens during conservation | Immediately suspend normal conservation activities while the chamber is open. | Door interruption recorded and normal environmental operation paused. |
-| O18 | Verify Resumption Readiness | Door closes after an interruption | Recheck artifact conditions and sensor readiness before resuming normal activity. | Resume authorization or continued suspension. |
-| O19 | Manage Power Loss | Power unavailable during conservation | Switch to emergency power when available and determine the safe response. | Emergency supply active or safe-shutdown command issued. |
-| O20 | Record Power Incident | Power loss or emergency supply failure | Preserve the incident details for audit and operator review. | Time-stamped power incident record. |
-| O21 | Confirm Safe Artifact Removal | Operator requests artifact removal | Verify safe chamber conditions and ensure no active protection response is underway. | Removal authorized or denied with reasons. |
+## Operation Categories
 
-## Operation Grouping
-
-| Group | Included operations |
+| Category | Operation IDs |
 |---|---|
 | Startup and readiness | O1, O2, O3 |
 | Artifact setup | O4, O5, O6 |
-| Routine monitoring | O7, O8 |
+| Monitoring and compliance | O7, O8 |
 | Environmental recovery | O9, O10, O11 |
 | Protection and alerting | O12, O13, O14 |
 | Vibration response | O15, O16 |
 | Door safety | O17, O18 |
-| Power continuity and shutdown | O19, O20 |
+| Power continuity and incident handling | O19, O20 |
 | Artifact handling safety | O21 |
-
-## Key Behavioral Rules
-
-1. Normal conservation cannot begin until the essential self-check succeeds.
-2. An open chamber door blocks normal conservation and suspends active environmental operation.
-3. A correction command is not proof of recovery; sensor readings must verify recovery.
-4. Protection mode requires protective controls and an operator alert when recovery fails.
-5. Vibration response cannot end until the vibration remains below the threshold for the required stabilization period.
-6. Emergency power is used when available; otherwise the system records the incident and performs a safe shutdown.
-7. Artifact removal is allowed only after the system confirms safe conditions and no active protection response.
