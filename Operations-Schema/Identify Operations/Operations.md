@@ -1,4 +1,4 @@
-# SV&V Lab Task 5 — Identify Operations
+# SV&V Lab Task 5 - Identify Operations
 
 ## Smart Museum Artifact Conservation System
 
